@@ -32,6 +32,19 @@ app.get("/", (req, res) => {
     });
 });
 
+app.get("/artigo/:id", (req, res) => {
+  Artigo.findOne({ _id: req.params.id })
+    .then((artigo) => {
+      return res.json(artigo);
+    })
+    .catch((erro) => {
+      return res.status(400).json({
+        error: true,
+        mensage: "Nenhum artigo encontrado...",
+      });
+    });
+});
+
 app.post("/artigo", (req, res) => {
   const artigo = Artigo.create(req.body, (err) => {
     if (err)
