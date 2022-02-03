@@ -1,4 +1,5 @@
 const express = require("express");
+const res = require("express/lib/response");
 const mongoose = require("mongoose");
 
 require("./models/Artigos");
@@ -69,6 +70,20 @@ app.put("/artigo/:id", (req, res) => {
     return res.json({
       error: false,
       message: "Artigo editado com sucesso",
+    });
+  });
+});
+
+app.delete("/artigo/:id", (req, res) => {
+  const artigo = Artigo.deleteOne({ _id: req.params.id }, (err) => {
+    if (err)
+      return res.status(400).json({
+        error: true,
+        mensage: "Erro: Não foi apagado nenhum artigo",
+      });
+    return res.json({
+      error: false,
+      message: "Artigo apagado com sucesso",
     });
   });
 });
